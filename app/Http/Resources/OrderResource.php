@@ -3,6 +3,8 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\OrderDetailResource;
+use App\Order_detail;
 
 class OrderResource extends JsonResource
 {
@@ -18,6 +20,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'nama' => $this->nama,
             'no_meja' => $this->no_meja,
+            'pesanan' => OrderDetailResource::collection(Order_detail::where('order_id', $this->id)->get())
         ];
     }
 }

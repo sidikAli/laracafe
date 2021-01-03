@@ -13,19 +13,8 @@ class OrderDetailResource extends JsonResource
      * @return array
      */
 
-    public static $wrap = 'order';
-
     public function toArray($request)
     {
-        return [
-            'id' => $this->order->id,
-            'nama' => $this->order->nama,
-            'no_meja' => $this->order->nama,
-            'order' => [
-                'food' => $this->food,
-                'qty' => $this->qty,
-                'keterangan' => $this->keterangan
-            ] 
-        ];
+        return $this->food;
     }
 }

@@ -14,9 +14,10 @@ class OrderController extends Controller
 {
     public function index()
     {
-    	// $orders = Order::first();
-        $order_details = Order_detail::all();
-    	return OrderDetailResource::collection($order_details);
+    	$orders = Order::all();
+        return OrderResource::collection($orders);
+     //    $order_details = Order_detail::all();
+    	// return OrderDetailResource::collection($order_details);
     }
 
     public function store(Request $request)
