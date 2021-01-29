@@ -15,9 +15,14 @@ class FoodController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $foods = Food::all();
+        
+        if ($request->has('q')) {
+            $foods = Food::where('name', 'like', '%'. $request->q .'%')->get();
+        } 
+
         return FoodResource::collection($foods);
         // return response()->json(['foods' => $foods], 200);
     }

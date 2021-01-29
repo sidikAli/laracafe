@@ -16,8 +16,6 @@ class OrderController extends Controller
     {
     	$orders = Order::all();
         return OrderResource::collection($orders);
-     //    $order_details = Order_detail::all();
-    	// return OrderDetailResource::collection($order_details);
     }
 
     public function store(Request $request)
@@ -52,14 +50,14 @@ class OrderController extends Controller
             //hapus semua data di cart
             Cart::truncate();
 
-            return OrderDetailResource::collection(Order_detail::where('order_id', $order->id));;
+            return new OrderResource( Order::find($order->id) );;
         }
     }
 
     public function show($id)
     {
-        $order = Order_detail::where('order_id', $id)->get();
-        return OrderDetailResource::collection($order);
+        $order = Order::find($id);
+        return new OrderResource($order);
     }
 
     public function destroy($id)
