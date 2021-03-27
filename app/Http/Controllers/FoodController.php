@@ -6,7 +6,7 @@ use App\Food;
 use Illuminate\Http\Request;
 use App\Http\Resources\FoodResource;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Storage;
+Use File;
 
 class FoodController extends Controller
 {
@@ -49,7 +49,7 @@ class FoodController extends Controller
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
             'price'     => 'required|integer',
-            'image'     => 'required|image'
+            'image'     => 'required|image|max:2048'
         ]);
 
         if($validator->fails()) {
@@ -59,7 +59,6 @@ class FoodController extends Controller
         } else {
             $image      = $request->file('image');
             $fileName   = time() . uniqid() . '.' .$image->getClientOriginalExtension();
-            Storage::disk('local')->put('images/' . $fileName, $image, 'public');
 
             $food = Food::create([
                 'name'   => $request->name,
@@ -68,6 +67,7 @@ class FoodController extends Controller
                 'is_ready' => true,
             ]);
 
+            $image->move('img/foods', $fileName);
             return response()->json($food, 201);
         }
     }
@@ -115,7 +115,7 @@ class FoodController extends Controller
         $validator = Validator::make($request->all(), [
             'name'      => 'required',
             'price'     => 'required|integer',
-            'image'     => 'image'
+            'image'     => 'required|image|max:2048'
         ]);
 
         if($validator->fails()) {
@@ -132,8 +132,11 @@ class FoodController extends Controller
             if ($request->hasFile('image')) {
                 $image      = $request->file('image');
                 $fileName   = time() . uniqid() . '.' .$image->getClientOriginalExtension();
-                Storage::disk('local')->put('images/' . $fileName, $image, 'public');
+                $image->move('img/foods', $fileName);
                 $data['image'] = $fileName;
+
+                //delete image
+                File::delete('img/foods/' . $food->image);
             }
 
             $food->update($data);
@@ -156,6 +159,7 @@ class FoodController extends Controller
     {
         $food = Food::find($id);
         if ($food) {
+            File::delete('img/foods/' . $food->image);
             $food->delete();
             return response()->json(['message' => 'Data deleted successfully'], 204);
         } else {

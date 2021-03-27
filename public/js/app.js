@@ -20958,7 +20958,7 @@ var render = function() {
                           _c("img", {
                             staticClass: "img-fluid shadow",
                             attrs: {
-                              src: "../storage/images/" + cart.food.image,
+                              src: "/img/foods/" + cart.food.image,
                               width: "200"
                             }
                           })
@@ -21192,7 +21192,7 @@ var render = function() {
           _c("div", { staticClass: "col-md-6" }, [
             _c("img", {
               staticClass: "img-fluid shadow rounded",
-              attrs: { src: "../storage/images/" + _vm.food.image }
+              attrs: { src: "/img/foods/" + _vm.food.image }
             })
           ]),
           _vm._v(" "),
@@ -21641,10 +21641,7 @@ var render = function() {
   return _c("div", { staticClass: "card card-product shadow" }, [
     _c("img", {
       staticClass: "card-img-top",
-      attrs: {
-        src: "../storage/images/" + _vm.food.image,
-        alt: "Card image cap"
-      }
+      attrs: { src: "/img/foods/" + _vm.food.image, alt: "Card image cap" }
     }),
     _vm._v(" "),
     _c(

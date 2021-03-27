@@ -24,7 +24,7 @@
       <!-- Food Details -->
       <div class="row mt-2">
           <div class="col-md-6">
-              <img :src="'../storage/images/' + food.image" class="img-fluid shadow rounded">
+              <img :src="'/img/foods/' + food.image" class="img-fluid shadow rounded">
           </div>
           <div class="col-md-6">
               <h2><strong>{{ food.name }}</strong></h2>
